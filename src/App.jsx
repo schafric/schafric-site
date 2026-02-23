@@ -8,8 +8,10 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
 import Drops from './components/Drops'
+import Articles from './components/Articles'
 import Resources from './components/Resources'
 import DropDetail from './components/DropDetail'
+import ArticleDetail from './components/ArticleDetail'
 import ResourceDetail from './components/ResourceDetail'
 import Explore from './components/Explore'
 import Footer from './components/Footer'
@@ -46,6 +48,8 @@ function Layout() {
           <Route path="/about" element={<About />} />
           <Route path="/drops" element={<Drops />} />
           <Route path="/drops/:slug" element={<DropDetail />} />
+          <Route path="/articles" element={<Articles />} />
+          <Route path="/articles/:slug" element={<ArticleDetail />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/resources/:slug" element={<ResourceDetail />} />
         </Routes>

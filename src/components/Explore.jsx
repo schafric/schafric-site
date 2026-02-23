@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { PenLine, BookMarked, ArrowRight, ArrowUpRight } from 'lucide-react'
+import { PenLine, FileText, BookMarked, ArrowRight, ArrowUpRight } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -11,7 +11,13 @@ const SECTIONS = [
     to: '/drops',
     icon: PenLine,
     label: 'Drops',
-    desc: 'Short reflections on engineering leadership, team dynamics, and lessons learned from building products at scale.',
+    desc: 'Small realisations and loose threads of thought — me thinking out loud about engineering, leadership, and everything in between.',
+  },
+  {
+    to: '/articles',
+    icon: FileText,
+    label: 'Articles',
+    desc: 'Longer pieces on engineering leadership, team dynamics, and lessons learned from building products at scale.',
   },
   {
     to: '/resources',
@@ -74,7 +80,7 @@ export default function Explore() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {SECTIONS.map(item => (
             <Link
               key={item.label}

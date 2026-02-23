@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { id: 'home', label: 'home', to: '/' },
   { id: 'about', label: 'about', to: '/about' },
   { id: 'drops', label: 'drops', to: '/drops' },
+  { id: 'articles', label: 'articles', to: '/articles' },
   { id: 'resources', label: 'resources', to: '/resources' },
 ]
 

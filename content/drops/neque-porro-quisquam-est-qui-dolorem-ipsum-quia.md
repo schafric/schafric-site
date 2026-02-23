@@ -1,6 +1,5 @@
 ---
 title: "Neque porro quisquam est qui dolorem ipsum quia"
-type: thought
 tag: Personal
 date: 2025-01-28
 summary: "Curabitur eleifend dui eu mauris fringilla, nec sollicitudin ex aliquam. Etiam vitae velit convallis, condimentum odio tincidunt, vehicula sem. Fusce nec arcu augue. Donec bibendum quis lacus vitae laoreet."
