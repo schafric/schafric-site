@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ArrowLeft } from 'lucide-react'
 import { DROPS, toSlug } from '../content'
+import Markdown from './Markdown'
 
 const TAG_COLORS = {
   Leadership: 'bg-clay/10 text-clay',
@@ -65,8 +66,6 @@ export default function DropDetail() {
     )
   }
 
-  const paragraphs = drop.content.split('\n\n')
-
   return (
     <section
       ref={sectionRef}
@@ -99,17 +98,8 @@ export default function DropDetail() {
           </span>
         </div>
 
-        <div className="detail-body">
-          {paragraphs.map((paragraph, i) => (
-            <p
-              key={i}
-              className={`text-base md:text-lg text-charcoal/70 leading-loose ${
-                i > 0 ? 'mt-6' : ''
-              }`}
-            >
-              {paragraph}
-            </p>
-          ))}
+        <div className="detail-body text-base md:text-lg">
+          <Markdown>{drop.content}</Markdown>
         </div>
 
         <div className="mt-14 pt-8 border-t border-charcoal/8">

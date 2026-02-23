@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ArrowLeft } from 'lucide-react'
 import { RESOURCES, toSlug } from '../content'
+import Markdown from './Markdown'
 
 const TYPE_COLORS = {
   book: 'bg-moss/10 text-moss border-moss/15',
@@ -113,9 +114,9 @@ export default function ResourceDetail() {
           <span className="font-mono text-xs text-clay tracking-widest uppercase">
             My take
           </span>
-          <p className="mt-6 text-base md:text-lg text-charcoal/60 leading-loose">
-            {resource.content}
-          </p>
+          <div className="mt-6 text-base md:text-lg">
+            <Markdown>{resource.content}</Markdown>
+          </div>
         </div>
 
         <div className="mt-16 pt-10 border-t border-charcoal/8">

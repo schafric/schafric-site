@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ArrowLeft } from 'lucide-react'
 import { ARTICLES, toSlug } from '../content'
+import Markdown from './Markdown'
 
 const TAG_COLORS = {
   Leadership: 'bg-clay/10 text-clay',
@@ -70,8 +71,6 @@ export default function ArticleDetail() {
     )
   }
 
-  const paragraphs = article.content.split('\n\n')
-
   return (
     <section
       ref={sectionRef}
@@ -108,17 +107,8 @@ export default function ArticleDetail() {
           {article.title}
         </h1>
 
-        <div className="detail-body mt-12">
-          {paragraphs.map((paragraph, i) => (
-            <p
-              key={i}
-              className={`text-base md:text-lg text-charcoal/60 leading-loose ${
-                i > 0 ? 'mt-8' : ''
-              }`}
-            >
-              {paragraph}
-            </p>
-          ))}
+        <div className="detail-body mt-12 text-base md:text-lg">
+          <Markdown>{article.content}</Markdown>
         </div>
 
         <div className="mt-16 pt-10 border-t border-charcoal/8">
