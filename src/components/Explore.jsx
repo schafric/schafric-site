@@ -11,19 +11,19 @@ const SECTIONS = [
     to: '/drops',
     icon: PenLine,
     label: 'Drops',
-    desc: 'Small realisations and loose threads of thought — me thinking out loud about engineering, leadership, and everything in between.',
+    desc: 'Small realisations and loose threads of thought: me thinking out loud about engineering, leadership, and everything in between.',
   },
   {
     to: '/articles',
     icon: FileText,
     label: 'Articles',
-    desc: 'Longer pieces on engineering leadership, team dynamics, and lessons learned from building products at scale.',
+    desc: 'Longer pieces on anything from engineering leadership to personal stuff.',
   },
   {
     to: '/resources',
     icon: BookMarked,
     label: 'Resources',
-    desc: 'A curated collection of articles, podcasts, and books that have shaped how I think about technology and management.',
+    desc: 'A collection of articles, podcasts, and books that I enjoyed and that I believe are worth sharing.',
   },
 ]
 
@@ -75,8 +75,8 @@ export default function Explore() {
               <ArrowUpRight className="w-4 h-4" />
             </a>
             . This is my corner of the internet where I share reflections on
-            engineering leadership, things I'm reading, and resources worth
-            passing along.{' '}
+            engineering leadership, things I'm reading and listening to, and resources worth
+            passing along.{' '}<br />
             <Link
               to="/about"
               className="text-clay font-medium hover:text-clay-light transition-colors"

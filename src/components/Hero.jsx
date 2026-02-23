@@ -53,16 +53,16 @@ export default function Hero() {
 
         <h1 className="font-heading font-bold tracking-tight text-cream">
           <span className="hero-title-line block text-5xl md:text-7xl lg:text-8xl">
-            Somewhere between
+            Part notebook, part bookshelf,
           </span>
           <span className="hero-title-line block text-5xl md:text-7xl lg:text-8xl mt-1">
-            learning <span className="text-clay">& doing</span>
+            & part <span className="text-clay">thinking out loud</span>
           </span>
         </h1>
 
         <p className="hero-sub mt-8 text-lg md:text-xl text-cream/60 max-w-xl mx-auto font-light leading-relaxed">
           A personal space for reflections on engineering, leadership,
-          and the things I'm learning along the way.
+          and resources I stumble upon that are worth sharing.
         </p>
 
         <div className="hero-scroll mt-12">

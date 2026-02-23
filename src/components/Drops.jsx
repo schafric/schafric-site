@@ -73,7 +73,7 @@ export default function Drops() {
             Drops
           </h2>
           <p className="mt-5 text-charcoal/50 text-lg md:text-xl max-w-xl leading-relaxed">
-            Small realisations, loose threads of thought, and things I'm figuring out as I go. Some of these might grow into full articles — most are just me thinking out loud.
+            Small realisations, loose threads of thought, and things I'm figuring out as I go. Some of these might grow into full articles, but most are just me thinking out loud.
           </p>
         </div>
 

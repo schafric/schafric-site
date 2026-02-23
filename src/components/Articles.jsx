@@ -82,7 +82,7 @@ export default function Articles() {
             Articles
           </h2>
           <p className="mt-5 text-charcoal/50 text-lg md:text-xl max-w-xl leading-relaxed">
-            Longer pieces on engineering leadership, team dynamics, and lessons learned along the way.
+            Longer pieces on anything from engineering leadership to personal stuff.
           </p>
         </div>
 
