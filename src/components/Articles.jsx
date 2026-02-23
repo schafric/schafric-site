@@ -105,47 +105,55 @@ export default function Articles() {
         )}
 
         <div className="space-y-8 w-full text-left">
-          {filtered.map((article) => (
-            <Link
-              key={article.title}
-              to={`/articles/${toSlug(article.title)}`}
-              className="article-card group rounded-[2rem] bg-white/60 border border-charcoal/5 hover:border-charcoal/10 transition-all duration-500 card-lift block"
-              style={{ padding: '2.5rem 3rem' }}
-            >
-              <div className="flex items-start justify-between gap-4">
-                <h3 className="font-heading font-bold text-charcoal text-xl md:text-2xl leading-snug tracking-tight group-hover:text-clay transition-colors duration-300">
-                  {article.title}
-                </h3>
-              </div>
-
-              <div className="flex items-center gap-3 mt-4">
-                <span className="font-mono text-xs text-charcoal/35">
-                  {new Date(article.date).toLocaleDateString('en-US', {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric',
-                  })}
-                </span>
-                <span className="w-1 h-1 rounded-full bg-charcoal/20" />
-                <span
-                  className={`inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium ${
-                    TAG_COLORS[article.tag] || 'bg-charcoal/5 text-charcoal/60'
-                  }`}
-                >
-                  {article.tag}
-                </span>
-              </div>
-
-              <p className="mt-6 text-base md:text-lg text-charcoal/60 leading-loose">
-                {article.summary}
+          {filtered.length === 0 ? (
+            <div className="article-card rounded-[2rem] bg-white/60 border border-charcoal/5 text-center" style={{ padding: '4rem 3rem' }}>
+              <p className="text-charcoal/35 text-lg">
+                Nothing here yet — stay tuned.
               </p>
+            </div>
+          ) : (
+            filtered.map((article) => (
+              <Link
+                key={article.title}
+                to={`/articles/${toSlug(article.title)}`}
+                className="article-card group rounded-[2rem] bg-white/60 border border-charcoal/5 hover:border-charcoal/10 transition-all duration-500 card-lift block"
+                style={{ padding: '2.5rem 3rem' }}
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <h3 className="font-heading font-bold text-charcoal text-xl md:text-2xl leading-snug tracking-tight group-hover:text-clay transition-colors duration-300">
+                    {article.title}
+                  </h3>
+                </div>
 
-              <div className="mt-8 flex items-center gap-2 text-sm font-medium text-clay group-hover:text-clay-light transition-colors duration-300">
-                <span>Read more</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-              </div>
-            </Link>
-          ))}
+                <div className="flex items-center gap-3 mt-4">
+                  <span className="font-mono text-xs text-charcoal/35">
+                    {new Date(article.date).toLocaleDateString('en-US', {
+                      month: 'long',
+                      day: 'numeric',
+                      year: 'numeric',
+                    })}
+                  </span>
+                  <span className="w-1 h-1 rounded-full bg-charcoal/20" />
+                  <span
+                    className={`inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium ${
+                      TAG_COLORS[article.tag] || 'bg-charcoal/5 text-charcoal/60'
+                    }`}
+                  >
+                    {article.tag}
+                  </span>
+                </div>
+
+                <p className="mt-6 text-base md:text-lg text-charcoal/60 leading-loose">
+                  {article.summary}
+                </p>
+
+                <div className="mt-8 flex items-center gap-2 text-sm font-medium text-clay group-hover:text-clay-light transition-colors duration-300">
+                  <span>Read more</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                </div>
+              </Link>
+            ))
+          )}
         </div>
       </div>
     </section>
