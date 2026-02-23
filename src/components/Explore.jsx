@@ -76,7 +76,14 @@ export default function Explore() {
             </a>
             . This is my corner of the internet where I share reflections on
             engineering leadership, things I'm reading, and resources worth
-            passing along.
+            passing along.{' '}
+            <Link
+              to="/about"
+              className="text-clay font-medium hover:text-clay-light transition-colors"
+            >
+              Read more about me here
+            </Link>
+            .
           </p>
         </div>
 

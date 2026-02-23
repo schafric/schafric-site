@@ -1,9 +1,31 @@
 import { useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Briefcase, BookOpen, Podcast, ArrowUpRight } from 'lucide-react'
+import { PenLine, FileText, BookMarked, ArrowRight, ArrowUpRight } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const SECTIONS = [
+  {
+    to: '/drops',
+    icon: PenLine,
+    label: 'Drops',
+    desc: 'Small realisations and loose threads of thought — me thinking out loud about engineering, leadership, and everything in between.',
+  },
+  {
+    to: '/articles',
+    icon: FileText,
+    label: 'Articles',
+    desc: 'Longer pieces on engineering leadership, team dynamics, and lessons learned from building products at scale.',
+  },
+  {
+    to: '/resources',
+    icon: BookMarked,
+    label: 'Resources',
+    desc: 'A curated collection of articles, podcasts, and books that have shaped how I think about technology and management.',
+  },
+]
 
 export default function About() {
   const sectionRef = useRef(null)
@@ -68,37 +90,28 @@ export default function About() {
         </p>
 
         <div className="about-anim mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 w-full text-left">
-          {[
-            {
-              icon: Briefcase,
-              label: 'Work',
-              desc: 'Engineering leadership, management & team building',
-            },
-            {
-              icon: BookOpen,
-              label: 'Reading',
-              desc: 'Articles, books & long-form pieces that shaped my thinking',
-            },
-            {
-              icon: Podcast,
-              label: 'Listening',
-              desc: 'Podcasts & conversations worth sharing with others',
-            },
-          ].map(item => (
-            <div
+          {SECTIONS.map(item => (
+            <Link
               key={item.label}
-              className="about-anim group p-8 rounded-[2rem] bg-white/50 border border-charcoal/5 card-lift"
+              to={item.to}
+              className="group rounded-[2rem] bg-white/60 border border-charcoal/5 card-lift block"
+              style={{ padding: '3rem 3rem' }}
             >
-              <div className="w-12 h-12 rounded-2xl bg-moss/10 flex items-center justify-center mb-6 group-hover:bg-clay/10 transition-colors duration-300">
-                <item.icon className="w-5 h-5 text-moss group-hover:text-clay transition-colors duration-300" />
+              <div className="flex items-start justify-between mb-8">
+                <div className="w-14 h-14 rounded-2xl bg-moss/10 flex items-center justify-center group-hover:bg-clay/10 transition-colors duration-300">
+                  <item.icon className="w-6 h-6 text-moss group-hover:text-clay transition-colors duration-300" />
+                </div>
+                <ArrowRight className="w-5 h-5 text-charcoal/20 group-hover:text-clay group-hover:translate-x-1 transition-all duration-300" />
               </div>
-              <h3 className="font-heading font-semibold text-charcoal text-base tracking-tight">
+
+              <h3 className="font-heading font-bold text-charcoal text-2xl tracking-tight">
                 {item.label}
               </h3>
-              <p className="mt-2 text-sm text-charcoal/50 leading-relaxed">
+
+              <p className="mt-4 text-base text-charcoal/50 leading-relaxed">
                 {item.desc}
               </p>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
