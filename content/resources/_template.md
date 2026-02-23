@@ -3,6 +3,7 @@ title: "Resource title here"
 type: book # book | podcast | article
 author: "Author Name"
 date: 2025-01-01
+tags: personal, ai, engineering leadership # comma-separated list of tags
 summary: "A short one-line summary that appears in the list view."
 ---
 

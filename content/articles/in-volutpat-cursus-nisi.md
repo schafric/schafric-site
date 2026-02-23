@@ -2,6 +2,7 @@
 title: "In volutpat cursus nisi"
 tag: Reflection
 date: 2025-02-05
+tags: personal, ai
 summary: "Sed nec venenatis lacus. Praesent eget vehicula dolor. Phasellus vehicula elit nulla, viverra pulvinar purus faucibus id. Integer enim lorem, ullamcorper vitae nunc eget, porttitor bibendum diam."
 ---
 

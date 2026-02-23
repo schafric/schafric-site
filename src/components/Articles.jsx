@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -17,6 +17,25 @@ const TAG_COLORS = {
 
 export default function Articles() {
   const sectionRef = useRef(null)
+  const [activeTags, setActiveTags] = useState(new Set())
+
+  const allTags = useMemo(
+    () => [...new Set(ARTICLES.flatMap(a => a.tags))],
+    []
+  )
+
+  const filtered = activeTags.size === 0
+    ? ARTICLES
+    : ARTICLES.filter(a => [...activeTags].every(t => a.tags.includes(t)))
+
+  const toggleTag = (tag) => {
+    setActiveTags(prev => {
+      const next = new Set(prev)
+      if (next.has(tag)) next.delete(tag)
+      else next.add(tag)
+      return next
+    })
+  }
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -67,8 +86,26 @@ export default function Articles() {
           </p>
         </div>
 
+        {allTags.length > 0 && (
+          <div className="flex flex-wrap items-center gap-2 mb-10">
+            {allTags.map(tag => (
+              <button
+                key={tag}
+                onClick={() => toggleTag(tag)}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-300 cursor-pointer ${
+                  activeTags.has(tag)
+                    ? 'bg-clay/10 text-charcoal/70 border border-clay/40'
+                    : 'bg-transparent text-charcoal/40 border border-charcoal/10 hover:border-charcoal/20 hover:text-charcoal/60'
+                }`}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+        )}
+
         <div className="space-y-8 w-full text-left">
-          {ARTICLES.map((article) => (
+          {filtered.map((article) => (
             <Link
               key={article.title}
               to={`/articles/${toSlug(article.title)}`}

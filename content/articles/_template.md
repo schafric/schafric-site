@@ -2,6 +2,7 @@
 title: "Your article title here"
 tag: Leadership # Leadership | Engineering | Reflection | Personal | Management
 date: 2025-01-01
+tags: personal, ai, engineering leadership # comma-separated list of tags
 summary: "A short one-paragraph summary that appears on the card in the list view."
 ---
 

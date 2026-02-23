@@ -3,6 +3,7 @@ title: "Sed in massa lorem"
 type: book
 author: "Porta Nec"
 date: 2026-01-28
+tags: personal
 summary: "Duis eu tincidunt ex. Sed accumsan elementum eleifend."
 ---
 

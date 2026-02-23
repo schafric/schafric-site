@@ -9,21 +9,38 @@ gsap.registerPlugin(ScrollTrigger)
 export default function Resources() {
   const sectionRef = useRef(null)
   const [activeTypes, setActiveTypes] = useState(new Set())
+  const [activeTags, setActiveTags] = useState(new Set())
 
   const allTypes = useMemo(
     () => [...new Set(RESOURCES.map(r => r.type).filter(Boolean))],
     []
   )
 
-  const filtered = activeTypes.size === 0
-    ? RESOURCES
-    : RESOURCES.filter(r => activeTypes.has(r.type))
+  const allTags = useMemo(
+    () => [...new Set(RESOURCES.flatMap(r => r.tags))],
+    []
+  )
+
+  const filtered = RESOURCES.filter(r => {
+    const matchesType = activeTypes.size === 0 || activeTypes.has(r.type)
+    const matchesTags = activeTags.size === 0 || [...activeTags].every(t => r.tags.includes(t))
+    return matchesType && matchesTags
+  })
 
   const toggleType = (type) => {
     setActiveTypes(prev => {
       const next = new Set(prev)
       if (next.has(type)) next.delete(type)
       else next.add(type)
+      return next
+    })
+  }
+
+  const toggleTag = (tag) => {
+    setActiveTags(prev => {
+      const next = new Set(prev)
+      if (next.has(tag)) next.delete(tag)
+      else next.add(tag)
       return next
     })
   }
@@ -77,20 +94,41 @@ export default function Resources() {
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 mb-10">
-          {allTypes.map(type => (
-            <button
-              key={type}
-              onClick={() => toggleType(type)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-300 cursor-pointer capitalize ${
-                activeTypes.has(type)
-                  ? 'bg-clay/10 text-charcoal/70 border border-clay/40'
-                  : 'bg-transparent text-charcoal/40 border border-charcoal/10 hover:border-charcoal/20 hover:text-charcoal/60'
-              }`}
-            >
-              {type}
-            </button>
-          ))}
+        <div className="space-y-4 mb-10">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-mono text-[11px] text-charcoal/30 uppercase tracking-wider mr-1">Type</span>
+            {allTypes.map(type => (
+              <button
+                key={type}
+                onClick={() => toggleType(type)}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-300 cursor-pointer ${
+                  activeTypes.has(type)
+                    ? 'bg-clay/10 text-charcoal/70 border border-clay/40'
+                    : 'bg-transparent text-charcoal/40 border border-charcoal/10 hover:border-charcoal/20 hover:text-charcoal/60'
+                }`}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
+          {allTags.length > 0 && (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="font-mono text-[11px] text-charcoal/30 uppercase tracking-wider mr-1">Tags</span>
+              {allTags.map(tag => (
+                <button
+                  key={tag}
+                  onClick={() => toggleTag(tag)}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-300 cursor-pointer ${
+                    activeTags.has(tag)
+                      ? 'bg-clay/10 text-charcoal/70 border border-clay/40'
+                      : 'bg-transparent text-charcoal/40 border border-charcoal/10 hover:border-charcoal/20 hover:text-charcoal/60'
+                  }`}
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="space-y-0 w-full text-left">

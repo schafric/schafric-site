@@ -3,6 +3,7 @@ title: "Aenean Efficitur"
 type: article
 author: "Quisquam Est"
 date: 2026-01-20
+tags: ai, engineering leadership
 summary: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit."
 ---
 

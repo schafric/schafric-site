@@ -11,13 +11,13 @@ export default function Drops() {
   const [activeTags, setActiveTags] = useState(new Set())
 
   const allTags = useMemo(
-    () => [...new Set(DROPS.map(d => d.tag).filter(Boolean))],
+    () => [...new Set(DROPS.flatMap(d => d.tags))],
     []
   )
 
   const filtered = activeTags.size === 0
     ? DROPS
-    : DROPS.filter(d => activeTags.has(d.tag))
+    : DROPS.filter(d => [...activeTags].every(t => d.tags.includes(t)))
 
   const toggleTag = (tag) => {
     setActiveTags(prev => {

@@ -2,6 +2,7 @@
 title: "Neque porro quisquam est qui dolorem ipsum quia"
 tag: Personal
 date: 2025-01-28
+tags: personal, engineering leadership
 summary: "Curabitur eleifend dui eu mauris fringilla, nec sollicitudin ex aliquam. Etiam vitae velit convallis, condimentum odio tincidunt, vehicula sem. Fusce nec arcu augue. Donec bibendum quis lacus vitae laoreet."
 ---
 
