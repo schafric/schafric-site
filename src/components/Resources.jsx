@@ -1,34 +1,32 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowRight } from 'lucide-react'
 import { RESOURCES, toSlug } from '../content'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const FILTERS = ['All', 'Articles', 'Podcasts', 'Books']
-
-const FILTER_MAP = {
-  All: null,
-  Articles: 'article',
-  Podcasts: 'podcast',
-  Books: 'book',
-}
-
-const TYPE_COLORS = {
-  book: 'text-moss',
-  podcast: 'text-clay',
-  article: 'text-charcoal/50',
-}
-
 export default function Resources() {
   const sectionRef = useRef(null)
-  const [activeFilter, setActiveFilter] = useState('All')
+  const [activeTypes, setActiveTypes] = useState(new Set())
 
-  const filtered = activeFilter === 'All'
+  const allTypes = useMemo(
+    () => [...new Set(RESOURCES.map(r => r.type).filter(Boolean))],
+    []
+  )
+
+  const filtered = activeTypes.size === 0
     ? RESOURCES
-    : RESOURCES.filter(r => r.type === FILTER_MAP[activeFilter])
+    : RESOURCES.filter(r => activeTypes.has(r.type))
+
+  const toggleType = (type) => {
+    setActiveTypes(prev => {
+      const next = new Set(prev)
+      if (next.has(type)) next.delete(type)
+      else next.add(type)
+      return next
+    })
+  }
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -43,16 +41,16 @@ export default function Resources() {
         ease: 'power3.out',
       })
 
-      gsap.utils.toArray('.resource-row').forEach((row, i) => {
-        gsap.from(row, {
+      gsap.utils.toArray('.resource-item').forEach((item, i) => {
+        gsap.from(item, {
           scrollTrigger: {
-            trigger: row,
+            trigger: item,
             start: 'top 90%',
           },
-          y: 30,
+          y: 20,
           opacity: 0,
           duration: 0.5,
-          delay: i * 0.06,
+          delay: i * 0.04,
           ease: 'power3.out',
         })
       })
@@ -79,95 +77,50 @@ export default function Resources() {
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-12">
-          {FILTERS.map(filter => (
+        <div className="flex flex-wrap items-center gap-2 mb-10">
+          {allTypes.map(type => (
             <button
-              key={filter}
-              onClick={() => setActiveFilter(filter)}
-              className={`px-5 py-2 md:px-7 md:py-3 rounded-full text-xs md:text-sm font-medium transition-all duration-300 cursor-pointer ${
-                activeFilter === filter
-                  ? 'bg-charcoal text-cream'
-                  : 'bg-transparent text-charcoal/60 border border-charcoal/15 hover:border-charcoal/30 hover:text-charcoal'
+              key={type}
+              onClick={() => toggleType(type)}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-300 cursor-pointer capitalize ${
+                activeTypes.has(type)
+                  ? 'bg-clay/10 text-charcoal/70 border border-clay/40'
+                  : 'bg-transparent text-charcoal/40 border border-charcoal/10 hover:border-charcoal/20 hover:text-charcoal/60'
               }`}
             >
-              {filter}
+              {type}
             </button>
           ))}
         </div>
 
-        {/* Table header — hidden on mobile */}
-        <div className="hidden md:flex items-center gap-6 px-6 pb-4 border-b border-charcoal/10">
-          <span className="w-24 shrink-0 font-mono text-[11px] text-charcoal/30 uppercase tracking-widest">
-            Type
-          </span>
-          <span className="flex-1 font-mono text-[11px] text-charcoal/30 uppercase tracking-widest">
-            Title
-          </span>
-          <span className="w-32 shrink-0 text-right font-mono text-[11px] text-charcoal/30 uppercase tracking-widest">
-            Added
-          </span>
-        </div>
-
-        <div className="divide-y divide-charcoal/6">
+        <div className="space-y-0 w-full text-left">
           {filtered.map((res) => (
             <Link
               key={res.title}
               to={`/resources/${toSlug(res.title)}`}
-              className="resource-row group block py-7 md:py-8 px-2 md:px-6 -mx-2 md:-mx-6 rounded-2xl hover:bg-white/50 transition-all duration-300"
+              className="resource-item group block py-7 border-b border-charcoal/6 hover:border-charcoal/12 transition-colors duration-300"
             >
-              {/* Desktop layout */}
-              <div className="hidden md:flex items-start gap-6">
-                <span className={`w-24 shrink-0 font-mono text-xs font-medium capitalize pt-1 ${TYPE_COLORS[res.type]}`}>
-                  {res.type}
-                </span>
-
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-start gap-3">
-                    <h3 className="font-heading font-semibold text-charcoal text-base leading-snug tracking-tight group-hover:text-clay transition-colors duration-300">
-                      {res.title}
-                    </h3>
-                    <ArrowRight className="w-4 h-4 shrink-0 mt-0.5 text-charcoal/0 group-hover:text-clay group-hover:translate-x-1 transition-all duration-300" />
-                  </div>
-                  <p className="mt-1 font-mono text-xs text-charcoal/30">
-                    {res.author}
-                  </p>
-                  <p className="mt-3 text-sm text-charcoal/45 leading-relaxed">
-                    {res.summary}
-                  </p>
-                </div>
-
-                <span className="w-32 shrink-0 text-right font-mono text-xs text-charcoal/45 pt-1">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="font-mono text-xs text-charcoal/30">
                   {new Date(res.date).toLocaleDateString('en-US', {
                     month: 'short',
                     day: 'numeric',
-                    year: 'numeric',
                   })}
+                </span>
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-charcoal/5 text-charcoal/50 capitalize">
+                  {res.type}
                 </span>
               </div>
 
-              {/* Mobile layout */}
-              <div className="md:hidden">
-                <div className="flex items-center justify-between gap-3 mb-2">
-                  <span className={`font-mono text-xs font-medium capitalize ${TYPE_COLORS[res.type]}`}>
-                    {res.type}
-                  </span>
-                  <span className="font-mono text-xs text-charcoal/45">
-                    {new Date(res.date).toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: 'numeric',
-                    })}
-                  </span>
-                </div>
-                <h3 className="font-heading font-semibold text-charcoal text-base leading-snug tracking-tight group-hover:text-clay transition-colors duration-300">
-                  {res.title}
-                </h3>
-                <p className="mt-1 font-mono text-xs text-charcoal/30">
-                  {res.author}
-                </p>
-                <p className="mt-3 text-sm text-charcoal/45 leading-relaxed">
-                  {res.summary}
-                </p>
-              </div>
+              <h3 className="font-heading font-semibold text-charcoal text-base leading-snug tracking-tight group-hover:text-clay transition-colors duration-300">
+                {res.title}
+              </h3>
+              <p className="mt-1 font-mono text-xs text-charcoal/30">
+                {res.author}
+              </p>
+              <p className="mt-3 text-base text-charcoal/70 leading-relaxed group-hover:text-charcoal transition-colors duration-300">
+                {res.summary}
+              </p>
             </Link>
           ))}
         </div>

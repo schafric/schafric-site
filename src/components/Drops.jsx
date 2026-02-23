@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -6,16 +6,27 @@ import { DROPS, toSlug } from '../content'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const TAG_COLORS = {
-  Leadership: 'bg-clay/10 text-clay',
-  Engineering: 'bg-moss/10 text-moss',
-  Reflection: 'bg-amber-500/10 text-amber-700',
-  Personal: 'bg-rose-500/10 text-rose-700',
-  Management: 'bg-indigo-500/10 text-indigo-700',
-}
-
 export default function Drops() {
   const sectionRef = useRef(null)
+  const [activeTags, setActiveTags] = useState(new Set())
+
+  const allTags = useMemo(
+    () => [...new Set(DROPS.map(d => d.tag).filter(Boolean))],
+    []
+  )
+
+  const filtered = activeTags.size === 0
+    ? DROPS
+    : DROPS.filter(d => activeTags.has(d.tag))
+
+  const toggleTag = (tag) => {
+    setActiveTags(prev => {
+      const next = new Set(prev)
+      if (next.has(tag)) next.delete(tag)
+      else next.add(tag)
+      return next
+    })
+  }
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -53,7 +64,7 @@ export default function Drops() {
       ref={sectionRef}
       className="min-h-screen pt-40 md:pt-48 pb-32 md:pb-40 px-8 md:px-[10%]"
     >
-      <div className="w-full max-w-[720px]" style={{ margin: '10em auto' }}>
+      <div className="w-full max-w-[1200px]" style={{ margin: '10em auto' }}>
         <div className="drops-header mb-16">
           <span className="font-mono text-xs text-clay tracking-widest uppercase">
             Thinking out loud
@@ -66,8 +77,24 @@ export default function Drops() {
           </p>
         </div>
 
+        <div className="flex flex-wrap items-center gap-2 mb-10">
+          {allTags.map(tag => (
+            <button
+              key={tag}
+              onClick={() => toggleTag(tag)}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-300 cursor-pointer ${
+                activeTags.has(tag)
+                  ? 'bg-clay/10 text-charcoal/70 border border-clay/40'
+                  : 'bg-transparent text-charcoal/40 border border-charcoal/10 hover:border-charcoal/20 hover:text-charcoal/60'
+              }`}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+
         <div className="space-y-0 w-full text-left">
-          {DROPS.map((drop) => (
+          {filtered.map((drop) => (
             <Link
               key={drop.title}
               to={`/drops/${toSlug(drop.title)}`}
@@ -80,11 +107,7 @@ export default function Drops() {
                     day: 'numeric',
                   })}
                 </span>
-                <span
-                  className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium ${
-                    TAG_COLORS[drop.tag] || 'bg-charcoal/5 text-charcoal/60'
-                  }`}
-                >
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-charcoal/5 text-charcoal/50">
                   {drop.tag}
                 </span>
               </div>

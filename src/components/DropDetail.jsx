@@ -72,7 +72,7 @@ export default function DropDetail() {
       ref={sectionRef}
       className="min-h-screen pt-40 md:pt-48 pb-32 md:pb-40 px-8 md:px-[10%]"
     >
-      <div className="w-full max-w-[720px]" style={{ margin: '6em auto' }}>
+      <div className="w-full max-w-[1200px]" style={{ margin: '6em auto' }}>
         <Link
           to="/drops"
           className="detail-back inline-flex items-center gap-2 text-sm text-charcoal/40 hover:text-clay transition-colors duration-300 mb-12"

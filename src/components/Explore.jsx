@@ -102,7 +102,7 @@ export default function Explore() {
                 <ArrowRight className="w-5 h-5 text-charcoal/20 group-hover:text-clay group-hover:translate-x-1 transition-all duration-300" />
               </div>
 
-              <h3 className="font-heading font-bold text-charcoal text-2xl tracking-tight">
+              <h3 className="font-heading font-bold text-charcoal text-2xl tracking-tight group-hover:text-clay transition-colors duration-300">
                 {item.label}
               </h3>
 
